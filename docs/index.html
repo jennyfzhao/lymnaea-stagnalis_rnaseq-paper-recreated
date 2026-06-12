@@ -45,45 +45,41 @@
             <p>PCA and volcano plots showed clear transcriptomic differences among CNS age groups, with strong old-vs-young differential expression.</p>
           </article>
           <article>
-            <h3>Protein annotation</h3>
-            <p>Pfam domains and BLASTP-supported TransDecoder predictions provided interpretable protein-level annotations for many predicted ORFs.</p>
-          </article>
-          <article>
             <h3>Functional enrichment</h3>
             <p>GO enrichment found significant terms in the old-vs-young comparison. KEGG KO annotations were generated with KofamScan, while KO enrichment was treated cautiously when FDR support was weak.</p>
+          </article>
+          <article>
+            <h3>Annotation context</h3>
+            <p>Pfam, BLASTP, Pfam2GO, and KofamScan were used to add interpretation to predicted ORFs, but only results with clear statistical support are highlighted in the main figures.</p>
           </article>
         </div>
       </div>
     </section>
 
     <section id="figures" class="content figures">
-      <h2>Selected Graphs</h2>
+      <h2>Figures With Clear Takeaways</h2>
       <figure>
         <img src="../papers/lymnaea_stagnalis_CNS_aging/figures/pca/PCA_vst_DESeq2.png" alt="PCA plot of variance-stabilized DESeq2 expression">
-        <figcaption>PCA of variance-stabilized expression values.</figcaption>
+        <figcaption><strong>PCA:</strong> variance-stabilized expression separates CNS samples by age, suggesting age-associated transcriptome structure.</figcaption>
       </figure>
       <figure>
         <img src="../papers/lymnaea_stagnalis_CNS_aging/figures/volcano_plots/18_month_vs_3_month_volcano.png" alt="Volcano plot for 18 month vs 3 month comparison">
-        <figcaption>Differential expression in the 18 month vs 3 month CNS comparison.</figcaption>
-      </figure>
-      <figure>
-        <img src="../papers/lymnaea_stagnalis_CNS_aging/figures/heatmaps/top_2000_variable_genes_heatmap.png" alt="Heatmap of top variable genes">
-        <figcaption>Heatmap of highly variable genes across samples.</figcaption>
+        <figcaption><strong>Differential expression:</strong> the old-vs-young comparison shows many significant expression changes after FDR correction.</figcaption>
       </figure>
       <figure>
         <img src="../papers/lymnaea_stagnalis_CNS_aging/figures/enrichment/18_month_vs_3_month_GO_fdr_significant.png" alt="GO enrichment bar plot for 18 month vs 3 month comparison">
-        <figcaption>FDR-significant GO enrichment for the 18 month vs 3 month comparison.</figcaption>
+        <figcaption><strong>GO enrichment:</strong> significant GO terms provide functional interpretation for old-vs-young differentially expressed genes.</figcaption>
       </figure>
       <figure>
-        <img src="../papers/lymnaea_stagnalis_CNS_aging/figures/annotation_plots/18_month_vs_3_month/top_pfam_domains_by_direction.png" alt="Top Pfam domains by direction in differential expression">
-        <figcaption>Pfam domain patterns among annotated differentially expressed genes.</figcaption>
+        <img src="../papers/lymnaea_stagnalis_CNS_aging/figures/annotation_plots/18_month_vs_3_month/volcano_with_pfam_annotation.png" alt="Volcano plot with Pfam annotation for 18 month vs 3 month comparison">
+        <figcaption><strong>Annotation overlay:</strong> Pfam labels add biological context to the most visible old-vs-young expression shifts.</figcaption>
       </figure>
     </section>
 
     <section class="band">
       <div class="content">
         <h2>Limitations</h2>
-        <p>Blast2GO was not used because the command-line tool requires licensed activation. eggNOG-mapper was also skipped after database download issues. The final open-source route uses Pfam2GO for GO terms and KofamScan for KEGG Orthology annotations.</p>
+        <p>Blast2GO was not used because the command-line tool requires licensed activation. eggNOG-mapper was skipped after database download issues. The final open-source route uses Pfam2GO for GO terms and KofamScan for KEGG Orthology annotations. KEGG KO plots are kept out of the main figure set because KO-level enrichment did not show strong FDR support.</p>
       </div>
     </section>
   </main>

@@ -29,6 +29,11 @@ BLAST taxonomy databases, and the local `.venv/`.
 - KofamScan produced KEGG KO annotations, but KO-level enrichment was treated as exploratory
   when terms were not FDR-significant.
 
+The website highlights only figures with clear takeaways: PCA structure, old-vs-young
+differential expression, significant GO enrichment, and annotated expression shifts.
+Exploratory KEGG KO outputs are retained as result tables but are not emphasized as
+main findings.
+
 ## Reproducibility
 
 Activate the local project environment:
