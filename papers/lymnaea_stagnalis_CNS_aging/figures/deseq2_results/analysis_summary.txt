@@ -1,0 +1,29 @@
+Lymnaea stagnalis CNS aging RNA-seq analysis summary
+Generated: 2026-06-08 10:15:04 
+
+Input count matrix dimensions before DESeq2 filtering:
+Genes: 42673 
+Samples: 12 
+
+Samples aligned to metadata:
+            run_accession          sample_name age_group replicate plot_label
+SRR13618140   SRR13618140  L.stag CNS_3month_1   3_month         1   3mo_rep1
+SRR13618141   SRR13618141  L.stag CNS_3month_2   3_month         2   3mo_rep2
+SRR13618142   SRR13618142 L.stag CNS_18month_2  18_month         2  18mo_rep2
+SRR13618143   SRR13618143 L.stag CNS_18month_4  18_month         4  18mo_rep4
+SRR13618144   SRR13618144  L.stag CNS_3month_3   3_month         3   3mo_rep3
+SRR13618145   SRR13618145  L.stag CNS_3month_4   3_month         4   3mo_rep4
+SRR13618146   SRR13618146  L.stag CNS_6month_1   6_month         1   6mo_rep1
+SRR13618147   SRR13618147  L.stag CNS_6month_3   6_month         3   6mo_rep3
+SRR13618148   SRR13618148  L.stag CNS_6month_2   6_month         2   6mo_rep2
+SRR13618149   SRR13618149  L.stag CNS_6month_4   6_month         4   6mo_rep4
+SRR13618150   SRR13618150 L.stag CNS_18month_1  18_month         1  18mo_rep1
+SRR13618151   SRR13618151 L.stag CNS_18month_3  18_month         3  18mo_rep3
+
+Genes retained after DESeq2 filtering:
+41692 
+
+Differential expression result counts using padj < 0.05 and abs(log2FC) >= 1:
+6_month_vs_3_month : 20205 significant genes
+18_month_vs_3_month : 18449 significant genes
+18_month_vs_6_month : 889 significant genes
