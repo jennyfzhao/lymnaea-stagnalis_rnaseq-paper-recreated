@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
-SNAIL_ROOT="$PROJECT_ROOT/papers/lymnaea_stagnalis_CNS_aging"
+PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+SNAIL_ROOT="$PROJECT_ROOT"
 ACC_LIST="$SNAIL_ROOT/software/PRJNA698985_SraAccList.txt"
 SRA_DIR="$SNAIL_ROOT/data/sra"
 FASTQ_DIR="$SNAIL_ROOT/data/fastq"

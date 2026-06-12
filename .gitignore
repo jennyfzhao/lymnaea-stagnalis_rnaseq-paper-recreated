@@ -1,30 +1,19 @@
-# Keep this repository focused on the Lymnaea paper.
-papers/*/
-!papers/lymnaea_stagnalis_CNS_aging/
-!papers/lymnaea_stagnalis_CNS_aging/**
-
 .venv/
 .DS_Store
 .Rhistory
 __pycache__/
 .ipynb_checkpoints/
 
-# Local-only presentation/site drafts and paper-exploration notes.
+# Local-only presentation/site drafts and exploration notebooks.
 /docs/
-papers/README.md
-papers/*.ipynb
-papers/**/*.ipynb
-papers/*pipeline_table.md
-papers/**/*pipeline_table.md
+*.ipynb
 
-# Generic scratch/output folders at the workspace root.
+# Generic scratch/output folders.
 /cache/
-/data/raw/
-/data/processed/
 /results/
 /logs/
 
-# Keep downloaded tool archives out of version control if this folder becomes a git repo.
+# Downloaded archives.
 *.tar.gz
 *.tgz
 *.zip
@@ -41,33 +30,32 @@ papers/**/*pipeline_table.md
 *.cram
 *.crai
 
-# Large project data that can be regenerated from manifests/scripts.
-papers/lymnaea_stagnalis_CNS_aging/data/sra/
-papers/lymnaea_stagnalis_CNS_aging/data/fastq/
-papers/lymnaea_stagnalis_CNS_aging/data/aligned/
-papers/lymnaea_stagnalis_CNS_aging/data/reference_genome/
-papers/lymnaea_stagnalis_CNS_aging/data/stringtie/
+# Large public data and regenerated pipeline intermediates.
+data/sra/
+data/fastq/
+data/aligned/
+data/reference_genome/
+data/stringtie/
+data/fastqc-results/
+reference/*.ht2
+paper/*.pdf
 
 # Large annotation databases and intermediate search files.
-papers/lymnaea_stagnalis_CNS_aging/data/annotation/blastdb/
-papers/lymnaea_stagnalis_CNS_aging/data/annotation/eggnog_data/
-papers/lymnaea_stagnalis_CNS_aging/data/annotation/eggnog_mapper/
-papers/lymnaea_stagnalis_CNS_aging/data/annotation/kofam/profiles/
-papers/lymnaea_stagnalis_CNS_aging/data/annotation/kofam/tmp/
-papers/lymnaea_stagnalis_CNS_aging/data/annotation/kofam/profiles.tar.gz
-papers/lymnaea_stagnalis_CNS_aging/data/annotation/pfam/Pfam-A.hmm*
-papers/lymnaea_stagnalis_CNS_aging/data/annotation/transcripts.fa
-papers/lymnaea_stagnalis_CNS_aging/data/annotation/transcripts.fa.transdecoder.bed
-papers/lymnaea_stagnalis_CNS_aging/data/annotation/transcripts.fa.transdecoder.cds
-papers/lymnaea_stagnalis_CNS_aging/data/annotation/transcripts.fa.transdecoder.gff3
-papers/lymnaea_stagnalis_CNS_aging/data/annotation/transcripts.fa.transdecoder.pep
-papers/lymnaea_stagnalis_CNS_aging/data/annotation/transcripts.fa.transdecoder_dir/
-papers/lymnaea_stagnalis_CNS_aging/data/annotation/transdecoder_before_blastp_pfam/
-papers/lymnaea_stagnalis_CNS_aging/data/annotation/pfam/transdecoder_pfam.domtblout
-papers/lymnaea_stagnalis_CNS_aging/reference/*.ht2
-papers/lymnaea_stagnalis_CNS_aging/data/fastqc-results/
-papers/lymnaea_stagnalis_CNS_aging/paper/*.pdf
+data/annotation/blastdb/
+data/annotation/eggnog_data/
+data/annotation/eggnog_mapper/
+data/annotation/kofam/profiles/
+data/annotation/kofam/tmp/
+data/annotation/kofam/profiles.tar.gz
+data/annotation/pfam/Pfam-A.hmm*
+data/annotation/pfam/transdecoder_pfam.domtblout
+data/annotation/transcripts.fa
+data/annotation/transcripts.fa.transdecoder.bed
+data/annotation/transcripts.fa.transdecoder.cds
+data/annotation/transcripts.fa.transdecoder.gff3
+data/annotation/transcripts.fa.transdecoder.pep
+data/annotation/transcripts.fa.transdecoder_dir/
+data/annotation/transdecoder_before_blastp_pfam/
 
 # Local cloned/downloaded third-party tools.
-papers/lymnaea_stagnalis_CNS_aging/software/kofam_scan/
-papers/lymnaea_stagnalis_CNS_aging/software/blast2go_cli/
+software/kofam_scan/

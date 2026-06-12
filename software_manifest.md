@@ -1,143 +1,30 @@
 # Software Manifest
 
-This project keeps reusable software inside the project directory so analyses are easier to reproduce.
+This file lists the public sources for software used in the final workflow and how to install them from a clean checkout.
 
-## Active Environment
-
-- Python virtual environment: `.venv/`
-- Activation script: `scripts/activate_project.sh`
-- Local command-line tools: `.venv/tools/`
-
-Activate everything with:
+The easiest reproducible setup is:
 
 ```bash
-source scripts/activate_project.sh
+bash scripts/setup_python_venv.sh
+micromamba create -f environment.yml
+micromamba activate lymnaea-rnaseq
 ```
 
-## Installed Tools
-
-| Tool | Version | Location | Notes |
+| Software/resource | Public source | Install route used for a fresh checkout | Purpose in this project |
 | --- | --- | --- | --- |
-| SRA Toolkit | 3.4.1 | `.venv/tools/sratoolkit` | Provides `prefetch`, `fasterq-dump`, `fastq-dump`, and related utilities. |
-| FastQC | 0.12.1 | `.venv/tools/FastQC` | Generates HTML and ZIP quality-control reports from FASTQ files. |
-| HISAT2 | 2.2.1 | `.venv/tools/hisat2` | Splice-aware aligner for RNA-seq reads; provides `hisat2`, `hisat2-build`, and `hisat2-inspect`. |
-| Samtools | 1.23.1 | `.venv/tools/samtools-env` | Converts, sorts, indexes, and summarizes SAM/BAM/CRAM alignment files. |
-| StringTie | 3.0.3 | `.venv/tools/stringtie` | Assembles and quantifies transcripts from coordinate-sorted RNA-seq BAM alignments. |
-| NCBI BLAST+ | 2.17.0+ | `.venv/tools/blast` | Provides `blastp`, `makeblastdb`, `update_blastdb.pl`, and related BLAST command-line tools. |
-| NCBI BLAST taxdb | current download | `papers/lymnaea_stagnalis_CNS_aging/data/annotation/blastdb` | Provides taxonomy lookups for BLAST output fields such as `staxids` and `sscinames`. |
-| Annotation environment | local conda env | `.venv/tools/annotation-env` | Protein annotation tools installed with project-local micromamba. |
-| gffread | 0.12.9 | `.venv/tools/annotation-env/bin/gffread` | Extracts transcript FASTA sequences from GTF/GFF plus genome FASTA. |
-| TransDecoder | 6.0.0 | `.venv/tools/annotation-env/bin/TransDecoder.*` | Predicts coding regions and protein sequences from transcript FASTA files. |
-| Eclipse Temurin Java Runtime | 21.0.11+10 | `.venv/tools/java` | Project-local Java runtime used by FastQC. |
-
-## Common SRA Commands
-
-Download an SRA run:
-
-```bash
-prefetch SRR_ACCESSION --output-directory data/raw
-```
-
-Convert an SRA run to FASTQ:
-
-```bash
-fasterq-dump data/raw/SRR_ACCESSION --outdir data/raw --threads 4
-```
-
-Replace `SRR_ACCESSION` with the actual run accession, such as `SRR12345678`.
-
-## Common FastQC Commands
-
-Generate an HTML report for one FASTQ file:
-
-```bash
-fastqc data/raw/sample.fastq.gz --outdir results
-```
-
-Generate reports for all gzipped FASTQ files in `data/raw`:
-
-```bash
-fastqc data/raw/*.fastq.gz --outdir results --threads 4
-```
-
-## Common HISAT2 Commands
-
-Build a HISAT2 genome index from a reference genome FASTA:
-
-```bash
-hisat2-build reference/genome.fna.gz reference/hisat2_index/genome
-```
-
-Align paired-end reads to a HISAT2 index:
-
-```bash
-hisat2 -x reference/hisat2_index/genome \
-  -1 sample_1.fastq.gz \
-  -2 sample_2.fastq.gz \
-  -S sample.sam \
-  --threads 4
-```
-
-## Common Samtools Commands
-
-Convert SAM to BAM:
-
-```bash
-samtools view -@ 4 -bS sample.sam > sample.bam
-```
-
-Sort BAM:
-
-```bash
-samtools sort -@ 4 -o sample.sorted.bam sample.bam
-```
-
-Index sorted BAM:
-
-```bash
-samtools index sample.sorted.bam
-```
-
-## Common StringTie Commands
-
-Estimate transcript abundances for one coordinate-sorted BAM file using a reference annotation:
-
-```bash
-stringtie sample.sorted.bam \
-  -G reference/annotation.gtf \
-  -e -B \
-  -p 4 \
-  -o sample/stringtie.gtf
-```
-
-## Common Protein Annotation Commands
-
-Extract transcript sequences from a merged GTF and genome FASTA:
-
-```bash
-gffread papers/lymnaea_stagnalis_CNS_aging/data/stringtie/stringtie_merged.gtf \
-  -g papers/lymnaea_stagnalis_CNS_aging/data/reference_genome/GCA_900036025.1_v1.0_genomic.fna.gz \
-  -w papers/lymnaea_stagnalis_CNS_aging/data/annotation/transcripts.fa
-```
-
-Predict proteins from transcript sequences:
-
-```bash
-TransDecoder.LongOrfs \
-  -t papers/lymnaea_stagnalis_CNS_aging/data/annotation/transcripts.fa \
-  -O papers/lymnaea_stagnalis_CNS_aging/data/annotation
-
-TransDecoder.Predict \
-  -t papers/lymnaea_stagnalis_CNS_aging/data/annotation/transcripts.fa \
-  -O papers/lymnaea_stagnalis_CNS_aging/data/annotation
-```
-
-Integrate BLASTP and Pfam evidence into predicted ORF annotation:
-
-```bash
-TransDecoder.Predict \
-  -t papers/lymnaea_stagnalis_CNS_aging/data/annotation/transcripts.fa \
-  -O papers/lymnaea_stagnalis_CNS_aging/data/annotation \
-  --retain_blastp_hits papers/lymnaea_stagnalis_CNS_aging/data/annotation/blastp_refseq9/lymnaea_transdecoder_vs_refseq9.blastp.tsv \
-  --retain_pfam_hits papers/lymnaea_stagnalis_CNS_aging/data/annotation/pfam/transdecoder_pfam.domtblout
-```
+| Python virtual environment | Python standard library `venv` | `bash scripts/setup_python_venv.sh` | Runs custom Python scripts and installs `requirements.txt`. |
+| SRA Toolkit | https://github.com/ncbi/sra-tools/wiki/02.-Installing-SRA-Toolkit | `environment.yml` via bioconda, or NCBI binary downloads | Downloads public SRA runs and converts them to FASTQ with `prefetch` and `fasterq-dump`. |
+| FastQC | https://www.bioinformatics.babraham.ac.uk/projects/fastqc/ | `environment.yml` via bioconda, or Babraham FastQC download | Quality control reports for FASTQ files. |
+| HISAT2 | https://github.com/DaehwanKimLab/hisat2/releases | `environment.yml` via bioconda | Builds the genome index and aligns paired RNA-seq reads. |
+| Samtools | https://www.htslib.org/download/ | `environment.yml` via bioconda | Sorts and indexes SAM/BAM alignment files. |
+| StringTie | https://github.com/gpertea/stringtie/releases | `environment.yml` via bioconda | Assembles transcripts and estimates abundance from sorted BAM files. |
+| gffread | https://github.com/gpertea/gffread | `environment.yml` via bioconda | Extracts transcript FASTA from GTF/GFF and genome FASTA. |
+| TransDecoder | https://github.com/TransDecoder/TransDecoder/releases | `environment.yml` via bioconda | Predicts coding ORFs and protein FASTA sequences. |
+| NCBI BLAST+ | https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/ | `environment.yml` via bioconda, or NCBI BLAST+ binaries | Runs BLASTP against remote NCBI RefSeq protein sequences. |
+| NCBI BLAST taxdb | https://ftp.ncbi.nlm.nih.gov/blast/db/taxdb.tar.gz | `curl` download into `data/annotation/blastdb/` | Enables BLAST taxonomy output fields. |
+| HMMER | http://eddylab.org/software/hmmer/ | `environment.yml` via bioconda | Searches predicted proteins against Pfam-A HMMs. |
+| Pfam-A | https://ftp.ebi.ac.uk/pub/databases/Pfam/current_release/Pfam-A.hmm.gz | `curl`, `gunzip`, then `hmmpress` | Protein-domain database for `hmmscan`. |
+| Pfam2GO | https://current.geneontology.org/ontology/external2go/pfam2go | `curl` download into `data/annotation/go_pfam2go/` | Maps Pfam domains to Gene Ontology terms. |
+| KofamScan | https://github.com/takaram/kofam_scan | `git clone` into `software/kofam_scan` | Assigns KEGG Orthology identifiers to predicted proteins. |
+| KEGG KOfam data | https://www.genome.jp/ftp/db/kofam/ | `curl` download of `ko_list.gz` and `profiles.tar.gz` | HMM profiles and thresholds used by KofamScan. |
+| R / DESeq2 / ggplot2 / pheatmap | Bioconductor and CRAN through conda/bioconda | `environment.yml` | Differential expression analysis and figure generation. |

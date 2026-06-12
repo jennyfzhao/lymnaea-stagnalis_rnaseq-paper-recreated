@@ -1,7 +1,7 @@
 args <- commandArgs(trailingOnly = FALSE)
 script_file <- sub("--file=", "", args[grep("^--file=", args)])
 if (length(script_file) == 0) {
-  script_file <- "papers/lymnaea_stagnalis_CNS_aging/data/annotation/enrichment/plot_enrichment_baseR.R"
+  script_file <- "data/annotation/enrichment/plot_enrichment_baseR.R"
 }
 enrich_dir <- dirname(normalizePath(script_file, mustWork = FALSE))
 snail <- normalizePath(file.path(enrich_dir, "../../.."), mustWork = FALSE)
@@ -30,6 +30,8 @@ plot_file <- function(file, top_n = 20) {
 
   out_png <- file.path(fig_dir, paste0(contrast, "_", ontology, "_", suffix, ".png"))
   out_pdf <- file.path(fig_dir, paste0(contrast, "_", ontology, "_", suffix, ".pdf"))
+  tmp_png <- tempfile(tmpdir = fig_dir, fileext = ".png")
+  tmp_pdf <- tempfile(tmpdir = fig_dir, fileext = ".pdf")
 
   make_plot <- function() {
     old_mar <- par("mar")
@@ -47,13 +49,42 @@ plot_file <- function(file, top_n = 20) {
     par(mar = old_mar)
   }
 
-  png(out_png, width = 1800, height = 1200, res = 180)
-  make_plot()
-  dev.off()
+  png_args <- list(filename = tmp_png, width = 1800, height = 1200, res = 180)
+  if (capabilities("cairo")) {
+    png_args$type <- "cairo"
+  }
+  current_device <- dev.cur()
+  png_opened <- tryCatch(
+    {
+      do.call(png, png_args)
+      !identical(dev.cur(), current_device)
+    },
+    error = function(e) {
+      warning("Skipping PNG output for ", basename(out_png), ": ", conditionMessage(e))
+      FALSE
+    }
+  )
+  if (png_opened) {
+    make_plot()
+    dev.off()
+    file.rename(tmp_png, out_png)
+  }
 
-  pdf(out_pdf, width = 10, height = 7)
-  make_plot()
-  dev.off()
+  pdf_opened <- tryCatch(
+    {
+      pdf(tmp_pdf, width = 10, height = 7)
+      TRUE
+    },
+    error = function(e) {
+      warning("Skipping PDF output for ", basename(out_pdf), ": ", conditionMessage(e))
+      FALSE
+    }
+  )
+  if (pdf_opened) {
+    make_plot()
+    dev.off()
+    file.rename(tmp_pdf, out_pdf)
+  }
 }
 
 files <- list.files(enrich_dir, pattern = "_enrichment\\.csv$", full.names = TRUE)

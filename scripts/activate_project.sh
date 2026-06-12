@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Activate the project Python environment and local command-line tools.
+# Activate the project Python environment and optional local command-line tools.
 
 if [ -n "${BASH_SOURCE[0]:-}" ]; then
   SCRIPT_PATH="${BASH_SOURCE[0]}"
@@ -16,28 +16,31 @@ if [ -f "$PROJECT_ROOT/.venv/bin/activate" ]; then
   source "$PROJECT_ROOT/.venv/bin/activate"
 else
   echo "Missing Python virtual environment at $PROJECT_ROOT/.venv" >&2
-  echo "Create it with: python3 -m venv .venv" >&2
+  echo "Create it with: python3 -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt" >&2
   return 1 2>/dev/null || exit 1
 fi
 
 export PROJECT_ROOT
-export JAVA_HOME="$PROJECT_ROOT/.venv/tools/java"
-export HISAT2_HOME="$PROJECT_ROOT/.venv/tools/hisat2"
-export SAMTOOLS_HOME="$PROJECT_ROOT/.venv/tools/samtools-env"
-export STRINGTIE_HOME="$PROJECT_ROOT/.venv/tools/stringtie"
-export BLAST_HOME="$PROJECT_ROOT/.venv/tools/blast"
-export ANNOTATION_ENV="$PROJECT_ROOT/.venv/tools/annotation-env"
-export BLASTDB="$PROJECT_ROOT/papers/lymnaea_stagnalis_CNS_aging/data/annotation/blastdb"
-export PATH="$BLAST_HOME/bin:$STRINGTIE_HOME/bin:$SAMTOOLS_HOME/bin:$HISAT2_HOME/bin:$PROJECT_ROOT/.venv/tools/FastQC:$PROJECT_ROOT/.venv/tools/sratoolkit/bin:$JAVA_HOME/bin:$PATH:$ANNOTATION_ENV/bin"
+export BLASTDB="$PROJECT_ROOT/data/annotation/blastdb"
 export NCBI_SETTINGS="$PROJECT_ROOT/.venv/.ncbi/user-settings.mkfg"
+
+show_version() {
+  local label="$1"
+  shift
+  if command -v "$1" >/dev/null 2>&1; then
+    printf '%-9s %s\n' "$label:" "$("$@" 2>&1 | head -n 1)"
+  else
+    printf '%-9s not found on PATH\n' "$label:"
+  fi
+}
 
 echo "Activated RNA-seq project environment"
 echo "Project: $PROJECT_ROOT"
-echo "Python:  $(python --version 2>&1)"
-echo "SRA:     $(prefetch --version 2>&1)"
-echo "FastQC:  $(fastqc --version 2>&1)"
-echo "HISAT2:  $(hisat2 --version 2>&1 | head -n 1)"
-echo "Samtools: $(samtools --version 2>&1 | head -n 1)"
-echo "StringTie: $(stringtie --version 2>&1)"
-echo "BLAST+:  $(blastp -version 2>&1 | head -n 1)"
-echo "gffread: $(gffread --version 2>&1)"
+show_version "Python" python --version
+show_version "SRA" prefetch --version
+show_version "FastQC" fastqc --version
+show_version "HISAT2" hisat2 --version
+show_version "Samtools" samtools --version
+show_version "StringTie" stringtie --version
+show_version "BLAST+" blastp -version
+show_version "gffread" gffread --version

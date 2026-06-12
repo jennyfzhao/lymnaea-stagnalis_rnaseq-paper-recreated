@@ -5,14 +5,14 @@ set -euo pipefail
 #
 # Usage examples:
 #   source scripts/activate_project.sh
-#   papers/lymnaea_stagnalis_CNS_aging/software/download_fastq_parallel.sh SRR123 SRR456 SRR789
+#   software/download_fastq_parallel.sh SRR123 SRR456 SRR789
 #
 #   JOBS=4 THREADS_PER_JOB=2 \
-#     papers/lymnaea_stagnalis_CNS_aging/software/download_fastq_parallel.sh \
-#     papers/lymnaea_stagnalis_CNS_aging/software/PRJNA698985_SraAccList.txt
+#     software/download_fastq_parallel.sh \
+#     software/PRJNA698985_SraAccList.txt
 
-PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
-SNAIL_ROOT="$PROJECT_ROOT/papers/lymnaea_stagnalis_CNS_aging"
+PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+SNAIL_ROOT="$PROJECT_ROOT"
 
 SRA_DIR="${SRA_DIR:-$SNAIL_ROOT/data/sra}"
 FASTQ_DIR="${FASTQ_DIR:-$SNAIL_ROOT/data/fastq}"

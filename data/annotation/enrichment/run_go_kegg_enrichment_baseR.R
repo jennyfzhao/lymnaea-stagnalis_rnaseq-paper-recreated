@@ -1,7 +1,7 @@
 args <- commandArgs(trailingOnly = FALSE)
 script_file <- sub("--file=", "", args[grep("^--file=", args)])
 if (length(script_file) == 0) {
-  script_file <- "papers/lymnaea_stagnalis_CNS_aging/data/annotation/enrichment/run_go_kegg_enrichment_baseR.R"
+  script_file <- "data/annotation/enrichment/run_go_kegg_enrichment_baseR.R"
 }
 enrich_dir <- dirname(normalizePath(script_file, mustWork = FALSE))
 snail <- normalizePath(file.path(enrich_dir, "../../.."), mustWork = FALSE)

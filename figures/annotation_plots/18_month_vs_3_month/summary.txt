@@ -1,4 +1,4 @@
-Input: papers/lymnaea_stagnalis_CNS_aging/data/annotation/pfam/deseq2_annotated/18_month_vs_3_month_DESeq2_results_with_pfam.csv
+Input: data/annotation/pfam/deseq2_annotated/18_month_vs_3_month_DESeq2_results_with_pfam.csv
 padj cutoff: 0.05
 log2 fold-change cutoff: 1.0
 Up: 11127

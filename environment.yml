@@ -1,0 +1,26 @@
+name: lymnaea-rnaseq
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - python=3.11
+  - pandas
+  - matplotlib
+  - sra-tools
+  - fastqc
+  - hisat2
+  - samtools
+  - stringtie
+  - gffread
+  - transdecoder
+  - blast
+  - hmmer
+  - parallel
+  - ruby
+  - r-base
+  - bioconductor-deseq2
+  - r-ggplot2
+  - r-pheatmap
+  - r-readr
+  - r-dplyr
+  - r-stringr

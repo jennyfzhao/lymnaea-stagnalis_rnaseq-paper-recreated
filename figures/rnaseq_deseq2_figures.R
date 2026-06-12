@@ -2,7 +2,7 @@
 
 # RNA-seq downstream analysis for Lymnaea stagnalis CNS aging samples.
 # Place/run this script from:
-# papers/lymnaea_stagnalis_CNS_aging/figures
+# figures
 #
 # Input files are auto-detected from the script location or current working
 # directory, so this can be run from RStudio even if the working directory is
@@ -109,13 +109,6 @@ find_paper_dir <- function(script_dir) {
     repeat {
       candidate_dirs <- c(candidate_dirs, current_dir)
 
-      nested_paper_dir <- file.path(
-        current_dir,
-        "papers",
-        "lymnaea_stagnalis_CNS_aging"
-      )
-      candidate_dirs <- c(candidate_dirs, nested_paper_dir)
-
       parent_dir <- dirname(current_dir)
       if (identical(parent_dir, current_dir)) {
         break
@@ -141,7 +134,7 @@ find_paper_dir <- function(script_dir) {
     "data/expression_matrices/gene_count_matrix.csv\n",
     "data/sample_metadata.tsv\n\n",
     "Open this script from the project folder or move it back under:\n",
-    "papers/lymnaea_stagnalis_CNS_aging/figures",
+    "figures",
     call. = FALSE
   )
 }

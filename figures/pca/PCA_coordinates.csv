@@ -1,0 +1,13 @@
+"PC1","PC2","group","name","run_accession","sample_name","age_months","replicate","bam_path","age_group","plot_label","sizeFactor"
+-32.1498254250684,20.0861152634766,"3_month","SRR13618140","SRR13618140","L.stag CNS_3month_1","3",1,"data/aligned/SRR13618140.sorted.bam","3_month","3mo_rep1",0.910345392960518
+-35.2495704811221,-0.00601533765024636,"3_month","SRR13618141","SRR13618141","L.stag CNS_3month_2","3",2,"data/aligned/SRR13618141.sorted.bam","3_month","3mo_rep2",0.841868876824701
+19.1210470663172,-8.29854710444169,"18_month","SRR13618142","SRR13618142","L.stag CNS_18month_2","18",2,"data/aligned/SRR13618142.sorted.bam","18_month","18mo_rep2",0.985759395410901
+9.57646307029602,-6.2554829710366,"18_month","SRR13618143","SRR13618143","L.stag CNS_18month_4","18",4,"data/aligned/SRR13618143.sorted.bam","18_month","18mo_rep4",0.989989247930305
+-36.7931923337638,9.10877531640366,"3_month","SRR13618144","SRR13618144","L.stag CNS_3month_3","3",3,"data/aligned/SRR13618144.sorted.bam","3_month","3mo_rep3",0.906930350755483
+-50.5751985026546,-19.8788833283319,"3_month","SRR13618145","SRR13618145","L.stag CNS_3month_4","3",4,"data/aligned/SRR13618145.sorted.bam","3_month","3mo_rep4",0.730522275687667
+26.7741198846832,12.6002449413672,"6_month","SRR13618146","SRR13618146","L.stag CNS_6month_1","6",1,"data/aligned/SRR13618146.sorted.bam","6_month","6mo_rep1",1.14928089828207
+14.86215131996,-7.5415741302417,"6_month","SRR13618147","SRR13618147","L.stag CNS_6month_3","6",3,"data/aligned/SRR13618147.sorted.bam","6_month","6mo_rep3",1.25396009685404
+18.962574574721,6.22939201786262,"6_month","SRR13618148","SRR13618148","L.stag CNS_6month_2","6",2,"data/aligned/SRR13618148.sorted.bam","6_month","6mo_rep2",1.27524185134897
+25.2215505377793,-5.70972799814007,"6_month","SRR13618149","SRR13618149","L.stag CNS_6month_4","6",4,"data/aligned/SRR13618149.sorted.bam","6_month","6mo_rep4",1.12843770896414
+20.1678075713081,14.2022078440849,"18_month","SRR13618150","SRR13618150","L.stag CNS_18month_1","18",1,"data/aligned/SRR13618150.sorted.bam","18_month","18mo_rep1",1.00473691677119
+20.0820727175439,-14.5365045133529,"18_month","SRR13618151","SRR13618151","L.stag CNS_18month_3","18",3,"data/aligned/SRR13618151.sorted.bam","18_month","18mo_rep3",1.16089317474913
