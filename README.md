@@ -46,6 +46,12 @@ After activation, tools installed inside `.venv/` are available on `PATH`.
 
 See `software_manifest.md` for installed software and example commands.
 
+For the ordered table of software that actually produced project outputs, see:
+
+```text
+papers/lymnaea_stagnalis_CNS_aging/software_workflow_table.md
+```
+
 Project-specific files live under:
 
 ```text
