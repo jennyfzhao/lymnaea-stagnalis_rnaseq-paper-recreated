@@ -28,8 +28,6 @@ source scripts/activate_project.sh
 | Annotation environment | local conda env | `.venv/tools/annotation-env` | Protein annotation tools installed with project-local micromamba. |
 | gffread | 0.12.9 | `.venv/tools/annotation-env/bin/gffread` | Extracts transcript FASTA sequences from GTF/GFF plus genome FASTA. |
 | TransDecoder | 6.0.0 | `.venv/tools/annotation-env/bin/TransDecoder.*` | Predicts coding regions and protein sequences from transcript FASTA files. |
-| DIAMOND | 2.2.1 | `.venv/tools/annotation-env/bin/diamond` | Fast protein similarity search engine used directly or through eggNOG-mapper. |
-| eggNOG-mapper | 2.1.13 | `.venv/tools/annotation-env/bin/emapper.py` | Functional annotation with eggNOG orthology, GO, KEGG, and COG terms; requires eggNOG data download before annotation runs. |
 | Eclipse Temurin Java Runtime | 21.0.11+10 | `.venv/tools/java` | Project-local Java runtime used by FastQC. |
 
 ## Common SRA Commands
@@ -142,25 +140,4 @@ TransDecoder.Predict \
   -O papers/lymnaea_stagnalis_CNS_aging/data/annotation \
   --retain_blastp_hits papers/lymnaea_stagnalis_CNS_aging/data/annotation/blastp_refseq9/lymnaea_transdecoder_vs_refseq9.blastp.tsv \
   --retain_pfam_hits papers/lymnaea_stagnalis_CNS_aging/data/annotation/pfam/transdecoder_pfam.domtblout
-```
-
-Download eggNOG-mapper data before running functional annotation. This can be a large download:
-
-```bash
-download_eggnog_data.py \
-  -y \
-  --data_dir papers/lymnaea_stagnalis_CNS_aging/data/annotation/eggnog_data
-```
-
-Annotate predicted proteins with eggNOG-mapper:
-
-```bash
-emapper.py \
-  -i papers/lymnaea_stagnalis_CNS_aging/data/annotation/transcripts.fa.transdecoder.pep \
-  --itype proteins \
-  -m diamond \
-  --data_dir papers/lymnaea_stagnalis_CNS_aging/data/annotation/eggnog_data \
-  --cpu 8 \
-  -o lymnaea_protein_annotation \
-  --output_dir papers/lymnaea_stagnalis_CNS_aging/data/annotation
 ```

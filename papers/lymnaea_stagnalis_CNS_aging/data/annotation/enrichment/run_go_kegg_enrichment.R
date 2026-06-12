@@ -4,12 +4,18 @@ suppressPackageStartupMessages({
   library(stringr)
 })
 
-snail <- "/Users/jennyfzhao/Work/task/2026-06-03_rnaseq/papers/lymnaea_stagnalis_CNS_aging"
+args <- commandArgs(trailingOnly = FALSE)
+script_file <- sub("--file=", "", args[grep("^--file=", args)])
+if (length(script_file) == 0) {
+  script_file <- "papers/lymnaea_stagnalis_CNS_aging/data/annotation/enrichment/run_go_kegg_enrichment.R"
+}
+enrich_dir <- dirname(normalizePath(script_file, mustWork = FALSE))
+snail <- normalizePath(file.path(enrich_dir, "../../.."), mustWork = FALSE)
 
 go_file <- file.path(snail, "data/annotation/go_pfam2go/lymnaea_protein_go_pfam2go.tsv")
 ko_file <- file.path(snail, "data/annotation/kofam/lymnaea_kofam.mapper.tsv")
 de_dir <- file.path(snail, "figures/deseq2_results")
-out_dir <- file.path(snail, "data/annotation/enrichment")
+out_dir <- enrich_dir
 dir.create(out_dir, showWarnings = FALSE, recursive = TRUE)
 
 protein_to_gene <- function(x) sub("\\.[0-9]+\\.p[0-9]+$", "", x)

@@ -1,8 +1,21 @@
+# Keep this repository focused on the Lymnaea paper.
+papers/*/
+!papers/lymnaea_stagnalis_CNS_aging/
+!papers/lymnaea_stagnalis_CNS_aging/**
+
 .venv/
 .DS_Store
 .Rhistory
 __pycache__/
 .ipynb_checkpoints/
+
+# Local-only presentation/site drafts and paper-exploration notes.
+/docs/
+papers/README.md
+papers/*.ipynb
+papers/**/*.ipynb
+papers/*pipeline_table.md
+papers/**/*pipeline_table.md
 
 # Generic scratch/output folders at the workspace root.
 /cache/
@@ -54,10 +67,6 @@ papers/lymnaea_stagnalis_CNS_aging/data/annotation/pfam/transdecoder_pfam.domtbl
 papers/lymnaea_stagnalis_CNS_aging/reference/*.ht2
 papers/lymnaea_stagnalis_CNS_aging/data/fastqc-results/
 papers/lymnaea_stagnalis_CNS_aging/paper/*.pdf
-
-# Other paper folders in this local workspace are outside this portfolio repo.
-papers/honey_bee_imidacloprid/
-papers/sea_star_larval_regeneration/
 
 # Local cloned/downloaded third-party tools.
 papers/lymnaea_stagnalis_CNS_aging/software/kofam_scan/

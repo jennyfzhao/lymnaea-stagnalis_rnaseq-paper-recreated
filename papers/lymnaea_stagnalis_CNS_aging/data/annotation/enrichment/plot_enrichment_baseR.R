@@ -1,5 +1,10 @@
-snail <- "/Users/jennyfzhao/Work/task/2026-06-03_rnaseq/papers/lymnaea_stagnalis_CNS_aging"
-enrich_dir <- file.path(snail, "data/annotation/enrichment")
+args <- commandArgs(trailingOnly = FALSE)
+script_file <- sub("--file=", "", args[grep("^--file=", args)])
+if (length(script_file) == 0) {
+  script_file <- "papers/lymnaea_stagnalis_CNS_aging/data/annotation/enrichment/plot_enrichment_baseR.R"
+}
+enrich_dir <- dirname(normalizePath(script_file, mustWork = FALSE))
+snail <- normalizePath(file.path(enrich_dir, "../../.."), mustWork = FALSE)
 fig_dir <- file.path(snail, "figures/enrichment")
 dir.create(fig_dir, showWarnings = FALSE, recursive = TRUE)
 
