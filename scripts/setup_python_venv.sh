@@ -19,8 +19,10 @@ mkdir -p \
   data/fastqc-results \
   data/annotation/blastdb \
   data/annotation/pfam \
+  data/annotation/go_pfam2go \
   data/annotation/kofam \
-  reference
+  reference \
+  tools
 
 echo "Python venv is ready at .venv"
 echo "For bioinformatics tools, create the conda/mamba environment with:"

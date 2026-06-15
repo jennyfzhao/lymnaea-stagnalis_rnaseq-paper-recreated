@@ -6,10 +6,11 @@ The repository is flattened so the project folders are visible immediately:
 
 ```text
 data/        compact input tables, annotation tables, and enrichment results
+docs/        data-source notes, software manifest, and ordered workflow table
 figures/     DESeq2, PCA, volcano, heatmap, annotation, and enrichment figures
+metadata/    NCBI SRA accession list and run metadata
 paper/       citation and paper-source notes
 scripts/     helper scripts for annotation tables and plots
-software/    SRA accession list, run metadata, and download helpers
 ```
 
 Large public files are not stored in GitHub: FASTQ/SRA files, SAM/BAM files, HISAT2 indexes, reference FASTA files, Pfam/KOfam databases, BLAST taxonomy databases, and TransDecoder large intermediate FASTA/GFF outputs.
@@ -36,7 +37,7 @@ Runs used:
 
 The reference genome is NCBI Assembly `GCA_900036025.1` (`GCA_900036025.1_v1.0_genomic.fna.gz`).
 
-See `DATA_SOURCES.md` for browser links, database URLs, and metadata details.
+See `docs/data_sources.md` for browser links, database URLs, and metadata details.
 
 ## From-Scratch Setup
 
@@ -64,54 +65,22 @@ micromamba create -f environment.yml
 micromamba activate lymnaea-rnaseq
 ```
 
-The software sources are listed in `software_manifest.md`. The workflow table with commands, inputs, and outputs is `software_workflow_table.md`.
+The software sources are listed in `docs/software_manifest.md`. The workflow table with commands, inputs, and outputs is `docs/software_workflow_table.md`. A concise fresh-computer checklist is in `docs/reproducibility_checklist.md`.
 
 ## Download Public Data
 
-Download the SRA reads listed in `software/PRJNA698985_SraAccList.txt`:
+Download the SRA reads listed in `metadata/PRJNA698985_SraAccList.txt`:
 
 ```bash
 JOBS=3 THREADS_PER_JOB=4 \
-  software/download_fastq_parallel.sh \
-  software/PRJNA698985_SraAccList.txt
+  scripts/download_fastq_parallel.sh \
+  metadata/PRJNA698985_SraAccList.txt
 ```
 
-Download the reference genome:
+Download the reference genome and public annotation resources:
 
 ```bash
-mkdir -p data/reference_genome
-curl -L \
-  https://ftp.ncbi.nlm.nih.gov/genomes/all/GCA/900/036/025/GCA_900036025.1_v1.0/GCA_900036025.1_v1.0_genomic.fna.gz \
-  -o data/reference_genome/GCA_900036025.1_v1.0_genomic.fna.gz
-gunzip -k data/reference_genome/GCA_900036025.1_v1.0_genomic.fna.gz
-```
-
-Download annotation databases:
-
-```bash
-mkdir -p data/annotation/blastdb data/annotation/pfam data/annotation/go_pfam2go data/annotation/kofam software
-
-curl -L https://ftp.ncbi.nlm.nih.gov/blast/db/taxdb.tar.gz \
-  -o data/annotation/blastdb/taxdb.tar.gz
-tar -xzf data/annotation/blastdb/taxdb.tar.gz -C data/annotation/blastdb
-
-curl -L https://ftp.ebi.ac.uk/pub/databases/Pfam/current_release/Pfam-A.hmm.gz \
-  -o data/annotation/pfam/Pfam-A.hmm.gz
-gunzip -k data/annotation/pfam/Pfam-A.hmm.gz
-hmmpress data/annotation/pfam/Pfam-A.hmm
-
-curl -L https://current.geneontology.org/ontology/external2go/pfam2go \
-  -o data/annotation/go_pfam2go/pfam2go
-
-curl -L https://www.genome.jp/ftp/db/kofam/ko_list.gz \
-  -o data/annotation/kofam/ko_list.gz
-gunzip -k data/annotation/kofam/ko_list.gz
-
-curl -L https://www.genome.jp/ftp/db/kofam/profiles.tar.gz \
-  -o data/annotation/kofam/profiles.tar.gz
-tar -xzf data/annotation/kofam/profiles.tar.gz -C data/annotation/kofam
-
-git clone https://github.com/takaram/kofam_scan software/kofam_scan
+bash scripts/download_public_resources.sh
 ```
 
 ## Recreate Major Outputs
@@ -123,7 +92,7 @@ mkdir -p reference
 hisat2-build data/reference_genome/GCA_900036025.1_v1.0_genomic.fna reference/hisat2_i
 ```
 
-Run alignment, sorting, transcript assembly, and ORF prediction following the command patterns in `software_workflow_table.md`.
+Run alignment, sorting, transcript assembly, and ORF prediction following the command patterns in `docs/software_workflow_table.md`.
 
 Recreate DESeq2 figures from the included count matrix and sample metadata:
 
@@ -152,6 +121,12 @@ do
     --input "data/annotation/pfam/deseq2_annotated/${contrast}_DESeq2_results_with_pfam.csv" \
     --output-dir "figures/annotation_plots/${contrast}"
 done
+```
+
+Equivalent shortcut:
+
+```bash
+bash scripts/run_pfam_annotated_plots.sh
 ```
 
 The tracked annotated plot outputs are stored in:

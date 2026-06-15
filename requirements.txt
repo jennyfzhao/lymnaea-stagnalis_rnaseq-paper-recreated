@@ -1,5 +1,1 @@
-# Python packages for project scripts can be added here.
-#
-# Install/update with:
-#   source scripts/activate_project.sh
-#   python -m pip install -r requirements.txt
+matplotlib>=3.8

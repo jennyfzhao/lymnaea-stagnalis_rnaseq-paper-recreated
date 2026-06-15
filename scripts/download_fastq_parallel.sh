@@ -5,11 +5,11 @@ set -euo pipefail
 #
 # Usage examples:
 #   source scripts/activate_project.sh
-#   software/download_fastq_parallel.sh SRR123 SRR456 SRR789
+#   scripts/download_fastq_parallel.sh SRR123 SRR456 SRR789
 #
 #   JOBS=4 THREADS_PER_JOB=2 \
-#     software/download_fastq_parallel.sh \
-#     software/PRJNA698985_SraAccList.txt
+#     scripts/download_fastq_parallel.sh \
+#     metadata/PRJNA698985_SraAccList.txt
 
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 SNAIL_ROOT="$PROJECT_ROOT"

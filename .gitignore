@@ -4,8 +4,7 @@
 __pycache__/
 .ipynb_checkpoints/
 
-# Local-only presentation/site drafts and exploration notebooks.
-/docs/
+# Local-only exploration notebooks.
 *.ipynb
 
 # Generic scratch/output folders.
@@ -13,11 +12,13 @@ __pycache__/
 /.cache/
 /results/
 /logs/
+/tools/
 
 # Downloaded archives.
 *.tar.gz
 *.tgz
 *.zip
+*.pdf
 
 # Large sequencing and alignment files.
 *.sra
@@ -48,6 +49,8 @@ data/annotation/eggnog_mapper/
 data/annotation/kofam/profiles/
 data/annotation/kofam/tmp/
 data/annotation/kofam/profiles.tar.gz
+data/annotation/kofam/ko_list*
+data/annotation/go_pfam2go/pfam2go
 data/annotation/pfam/Pfam-A.hmm*
 data/annotation/pfam/transdecoder_pfam.domtblout
 data/annotation/transcripts.fa
@@ -59,4 +62,4 @@ data/annotation/transcripts.fa.transdecoder_dir/
 data/annotation/transdecoder_before_blastp_pfam/
 
 # Local cloned/downloaded third-party tools.
-software/kofam_scan/
+tools/kofam_scan/

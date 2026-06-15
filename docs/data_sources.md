@@ -11,8 +11,8 @@ This project uses public *Lymnaea stagnalis* CNS aging RNA-seq data and public a
 - Library strategy/source/selection: RNA-Seq, transcriptomic, random
 - Layout/platform: paired-end Illumina NovaSeq 6000
 - Local metadata files:
-  - `software/PRJNA698985_runinfo.csv`
-  - `software/PRJNA698985_SraAccList.txt`
+  - `metadata/PRJNA698985_runinfo.csv`
+  - `metadata/PRJNA698985_SraAccList.txt`
   - `data/sample_metadata.tsv`
 
 The SRA runs used here are:

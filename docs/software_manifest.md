@@ -25,6 +25,6 @@ micromamba activate lymnaea-rnaseq
 | HMMER | http://eddylab.org/software/hmmer/ | `environment.yml` via bioconda | Searches predicted proteins against Pfam-A HMMs. |
 | Pfam-A | https://ftp.ebi.ac.uk/pub/databases/Pfam/current_release/Pfam-A.hmm.gz | `curl`, `gunzip`, then `hmmpress` | Protein-domain database for `hmmscan`. |
 | Pfam2GO | https://current.geneontology.org/ontology/external2go/pfam2go | `curl` download into `data/annotation/go_pfam2go/` | Maps Pfam domains to Gene Ontology terms. |
-| KofamScan | https://github.com/takaram/kofam_scan | `git clone` into `software/kofam_scan` | Assigns KEGG Orthology identifiers to predicted proteins. |
+| KofamScan | https://github.com/takaram/kofam_scan | `bash scripts/download_public_resources.sh` clones it into `tools/kofam_scan` | Assigns KEGG Orthology identifiers to predicted proteins. |
 | KEGG KOfam data | https://www.genome.jp/ftp/db/kofam/ | `curl` download of `ko_list.gz` and `profiles.tar.gz` | HMM profiles and thresholds used by KofamScan. |
 | R / DESeq2 / ggplot2 / pheatmap | Bioconductor and CRAN through conda/bioconda | `environment.yml` | Differential expression analysis and figure generation. |
