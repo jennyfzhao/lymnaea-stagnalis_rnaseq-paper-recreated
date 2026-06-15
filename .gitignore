@@ -10,6 +10,7 @@ __pycache__/
 
 # Generic scratch/output folders.
 /cache/
+/.cache/
 /results/
 /logs/
 

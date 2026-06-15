@@ -9,7 +9,7 @@ data/        compact input tables, annotation tables, and enrichment results
 figures/     DESeq2, PCA, volcano, heatmap, annotation, and enrichment figures
 paper/       citation and paper-source notes
 scripts/     helper scripts for annotation tables and plots
-software/    SRA accession lists, run metadata, and download helpers
+software/    SRA accession list, run metadata, and download helpers
 ```
 
 Large public files are not stored in GitHub: FASTQ/SRA files, SAM/BAM files, HISAT2 indexes, reference FASTA files, Pfam/KOfam databases, BLAST taxonomy databases, and TransDecoder large intermediate FASTA/GFF outputs.
@@ -138,7 +138,7 @@ Rscript data/annotation/enrichment/run_go_kegg_enrichment_baseR.R
 Rscript data/annotation/enrichment/plot_enrichment_baseR.R
 ```
 
-Build Pfam-annotated DE plots after regenerating the Pfam `domtblout` file:
+Build Pfam-annotated DE plots after regenerating the Pfam `domtblout` file. The first command creates the Pfam-annotated DESeq2 tables for all contrasts; the loop creates the plot folder for each contrast:
 
 ```bash
 python scripts/build_pfam_annotation_tables.py \
@@ -146,7 +146,18 @@ python scripts/build_pfam_annotation_tables.py \
   --deseq-dir figures/deseq2_results \
   --output-dir data/annotation/pfam
 
-python scripts/make_annotated_de_plots.py \
-  --input data/annotation/pfam/deseq2_annotated/18_month_vs_3_month_DESeq2_results_with_pfam.csv \
-  --output-dir figures/annotation_plots/18_month_vs_3_month
+for contrast in 18_month_vs_3_month 18_month_vs_6_month 6_month_vs_3_month
+do
+  python scripts/make_annotated_de_plots.py \
+    --input "data/annotation/pfam/deseq2_annotated/${contrast}_DESeq2_results_with_pfam.csv" \
+    --output-dir "figures/annotation_plots/${contrast}"
+done
+```
+
+The tracked annotated plot outputs are stored in:
+
+```text
+figures/annotation_plots/18_month_vs_3_month/
+figures/annotation_plots/18_month_vs_6_month/
+figures/annotation_plots/6_month_vs_3_month/
 ```

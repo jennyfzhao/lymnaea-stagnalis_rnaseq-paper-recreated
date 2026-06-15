@@ -1,0 +1,7 @@
+Input: data/annotation/pfam/deseq2_annotated/6_month_vs_3_month_DESeq2_results_with_pfam.csv
+padj cutoff: 0.05
+log2 fold-change cutoff: 1.0
+Up: 12360
+Down: 7845
+Not significant: 21487
+Significant genes with Pfam annotation: 5732

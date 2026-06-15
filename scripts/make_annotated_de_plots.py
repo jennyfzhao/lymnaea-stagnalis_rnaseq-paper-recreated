@@ -6,8 +6,14 @@ from __future__ import annotations
 import argparse
 import csv
 import math
+import os
 from collections import Counter
 from pathlib import Path
+
+if "MPLCONFIGDIR" not in os.environ:
+    mpl_cache = Path.cwd() / ".cache" / "matplotlib"
+    mpl_cache.mkdir(parents=True, exist_ok=True)
+    os.environ["MPLCONFIGDIR"] = str(mpl_cache)
 
 import matplotlib.pyplot as plt
 
@@ -52,7 +58,7 @@ def write_csv(path: Path, rows: list[dict[str, str]], fieldnames: list[str]) -> 
         writer.writerows(rows)
 
 
-def plot_volcano(rows: list[dict[str, str]], output: Path, lfc_cutoff: float, padj_cutoff: float) -> None:
+def plot_volcano(rows: list[dict[str, str]], output: Path, contrast_label: str, lfc_cutoff: float, padj_cutoff: float) -> None:
     colors = {"Up": "#c43c45", "Down": "#2f70b7", "Not significant": "#bdbdbd"}
     order = ["Not significant", "Down", "Up"]
 
@@ -85,14 +91,14 @@ def plot_volcano(rows: list[dict[str, str]], output: Path, lfc_cutoff: float, pa
     ax.axhline(-math.log10(padj_cutoff), color="black", linestyle="--", linewidth=1)
     ax.set_xlabel("log2 fold change")
     ax.set_ylabel("-log10 adjusted p-value")
-    ax.set_title("18 month vs 3 month volcano plot with Pfam annotation")
+    ax.set_title(f"{contrast_label} volcano plot with Pfam annotation")
     ax.legend(frameon=False, markerscale=2)
     fig.tight_layout()
     fig.savefig(output)
     plt.close(fig)
 
 
-def plot_top_pfam_by_direction(rows: list[dict[str, str]], output: Path, top_n: int = 15) -> None:
+def plot_top_pfam_by_direction(rows: list[dict[str, str]], output: Path, contrast_label: str, top_n: int = 15) -> None:
     counts = {"Up": Counter(), "Down": Counter()}
     for row in rows:
         if row["result"] in counts and row["has_pfam"]:
@@ -110,14 +116,14 @@ def plot_top_pfam_by_direction(rows: list[dict[str, str]], output: Path, top_n: 
     ax.set_yticklabels(labels)
     ax.invert_yaxis()
     ax.set_xlabel("Number of significant genes")
-    ax.set_title("Top Pfam domains among significant DE genes")
+    ax.set_title(f"{contrast_label}: top Pfam domains among significant DE genes")
     ax.legend(frameon=False)
     fig.tight_layout()
     fig.savefig(output)
     plt.close(fig)
 
 
-def plot_top_annotated_genes(rows: list[dict[str, str]], output: Path, top_n: int = 20) -> None:
+def plot_top_annotated_genes(rows: list[dict[str, str]], output: Path, contrast_label: str, top_n: int = 20) -> None:
     candidates = [row for row in rows if row["result"] != "Not significant" and row["has_pfam"]]
     candidates.sort(key=lambda row: row["padj_float"])
     top = candidates[:top_n]
@@ -132,7 +138,7 @@ def plot_top_annotated_genes(rows: list[dict[str, str]], output: Path, top_n: in
     ax.invert_yaxis()
     ax.axvline(0, color="black", linewidth=1)
     ax.set_xlabel("log2 fold change")
-    ax.set_title("Top significant Pfam-annotated DE genes")
+    ax.set_title(f"{contrast_label}: top significant Pfam-annotated DE genes")
     fig.tight_layout()
     fig.savefig(output)
     plt.close(fig)
@@ -148,6 +154,7 @@ def main() -> None:
 
     args.output_dir.mkdir(parents=True, exist_ok=True)
     rows = read_rows(args.input, args.padj_cutoff, args.lfc_cutoff)
+    contrast_label = args.output_dir.name.replace("_", " ")
 
     significant_annotated = [
         row for row in rows if row["result"] != "Not significant" and row["has_pfam"]
@@ -184,9 +191,9 @@ def main() -> None:
             domain_rows.append({"direction": direction, "top_pfam_name": domain, "gene_count": count})
     write_csv(args.output_dir / "pfam_domain_counts_by_direction.csv", domain_rows, ["direction", "top_pfam_name", "gene_count"])
 
-    plot_volcano(rows, args.output_dir / "volcano_with_pfam_annotation.png", args.lfc_cutoff, args.padj_cutoff)
-    plot_top_pfam_by_direction(rows, args.output_dir / "top_pfam_domains_by_direction.png")
-    plot_top_annotated_genes(rows, args.output_dir / "top_annotated_de_genes_log2fc.png")
+    plot_volcano(rows, args.output_dir / "volcano_with_pfam_annotation.png", contrast_label, args.lfc_cutoff, args.padj_cutoff)
+    plot_top_pfam_by_direction(rows, args.output_dir / "top_pfam_domains_by_direction.png", contrast_label)
+    plot_top_annotated_genes(rows, args.output_dir / "top_annotated_de_genes_log2fc.png", contrast_label)
 
     counts = Counter(row["result"] for row in rows)
     with (args.output_dir / "summary.txt").open("w") as handle:
