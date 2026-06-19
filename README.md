@@ -17,11 +17,16 @@ Large public files are not stored in GitHub: FASTQ/SRA files, SAM/BAM files, HIS
 
 ## Main Results
 
-- Age-group RNA-seq samples separate in PCA space after variance-stabilizing transformation.
-- Differential expression is strongest in the 18-month vs 3-month CNS comparison.
-- Pfam annotation adds interpretable protein-domain context to differentially expressed genes.
-- GO enrichment identifies FDR-significant functional categories.
-- KofamScan produced KEGG KO annotations; KO-level enrichment is included as exploratory output.
+- CNS RNA-seq samples separate by age after DESeq2 variance-stabilizing transformation, with 3-month samples separating from the 6-month and 18-month groups.
+- DESeq2 retained 41,692 genes after filtering. The strongest transcriptomic shifts involve 3-month CNS samples: `6_month_vs_3_month` has 20,205 significant genes, `18_month_vs_3_month` has 18,449 significant genes, and `18_month_vs_6_month` has 889 significant genes using `padj < 0.05` and `abs(log2FoldChange) >= 1`.
+- The smaller `18_month_vs_6_month` result suggests that the biggest expression transition in this dataset occurs between 3 months and later ages, rather than between 6 and 18 months.
+- Pfam annotation identifies specific age-associated predicted genes with interpretable protein domains, including collagen-domain genes (`MSTRG.14013`, `MSTRG.14011`, `MSTRG.312`), a nerve-growth-factor-family gene (`MSTRG.14882`), an HSP90 chaperone gene (`MSTRG.30305`), cytochrome P450 gene `MSTRG.7692`, thioredoxin-like genes (`MSTRG.22291`, `MSTRG.21611`), and insulin/IGF/relaxin-family gene `MSTRG.21991`.
+- In `18_month_vs_3_month`, GO enrichment is FDR-significant for transmembrane transporter activity (`GO:0022857`), membrane (`GO:0016020`), G protein-coupled receptor activity (`GO:0004930`), transmembrane transport (`GO:0055085`), and GPCR signaling (`GO:0007186`), pointing to age-associated changes in membrane transport and receptor signaling.
+- In `18_month_vs_6_month`, the only FDR-significant GO term is extracellular matrix structural constituent (`GO:0005201`), matching the collagen-domain signal in the Pfam-annotated DE genes.
+- KofamScan produced KEGG KO annotations for gene-level context, but KO enrichment did not pass FDR correction in any contrast, so KEGG plots are included as exploratory summaries rather than confirmed pathway enrichment.
+- Overall, this reproduction aligns with the original Rosato et al. CNS aging paper in showing age-associated transcriptomic differences in *L. stagnalis* CNS tissue and in using predicted ORFs plus homology/domain-based annotation to interpret those changes. It should not be read as an exact numerical replication of every published table, because this repository rebuilds the workflow from public reads with its own recreated assembly, TransDecoder ORFs, Pfam/Pfam2GO annotation, KofamScan KO mapping, and enrichment thresholds.
+
+See `docs/figures_annotations_and_findings.md` for figure-by-figure explanations, annotation-table interpretation, and the main biological conclusions.
 
 ## Data Used
 
